@@ -1,17 +1,5 @@
-#compdef msfvenom 
+#compdef msfvenom
 #autoload
-#
-# zsh completion for msfvenom in Metasploit Framework Project (https://www.metasploit.com)
-#
-# github:  https://github.com/Green-m/msfvenom-zsh-completion
-#
-# author:  Green-m (greenm.xxoo@gmail.com)
-#
-# license: GNU General Public License v3.0
-#
-# Copyright (c) 2018, Green-m
-# All rights reserved.
-#
 
 _msfvenom() {
   zmodload zsh/parameter 2>/dev/null
@@ -29,7 +17,7 @@ _msfvenom() {
   local curcontext="$curcontext" state line ret=1
   typeset -A opt_args
 
-  _arguments -C \
+_arguments -C \
     '(-h --help)'{-h,--help}'[show help]' \
     '(-l --list)'{-l,--list}'[list modules]:type:(payloads encoders nops platforms archs encrypt formats all)' \
     '(-p --payload)'{-p,--payload}'[payload to use]:payload:->payloads' \
@@ -38,9 +26,20 @@ _msfvenom() {
     '(-e --encoder)'{-e,--encoder}'[the encoder to use]:encoder:->encoders' \
     '(--smallest)--smallest[generate the smallest possible payload]' \
     '(--encrypt)--encrypt[type of encryption]:encryption:(aes256 base64 rc4 xor)' \
+    '(--encrypt-key)--encrypt-key[key for --encrypt]:key' \
+    '(--encrypt-iv)--encrypt-iv[IV for --encrypt]:iv' \
     '(-a --arch)'{-a,--arch}'[architecture to use]:arch:->archs' \
     '(--platform)--platform[platform for payload]:platform:->platforms' \
     '(-o --out)'{-o,--out}'[save payload to file]:file:_files' \
+    '(-b --bad-chars)'{-b,--bad-chars}'[characters to avoid (e.g. \\x00\\xff)]:badchars' \
+    '(-n --nopsled)'{-n,--nopsled}'[prepend a nopsled of length size]:length' \
+    '(--encoder-space)--encoder-space[max size of encoded payload]:size' \
+    '(-i --iterations)'{-i,--iterations}'[number of times to encode]:count' \
+    '(-c --add-code)'{-c,--add-code}'[include additional win32 shellcode file]:file:_files' \
+    '(-x --template)'{-x,--template}'[custom executable template]:file:_files' \
+    '(-k --keep)'{-k,--keep}'[preserve template behavior and inject as new thread]' \
+    '(-v --var-name)'{-v,--var-name}'[custom variable name for certain formats]:name' \
+    '(-t --timeout)'{-t,--timeout}'[seconds to wait for STDIN (default 30)]:seconds' \
     '*: :->msf_options' && ret=0
 
   case "$state" in
