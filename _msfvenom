@@ -1,5 +1,17 @@
 #compdef msfvenom
 #autoload
+#
+# zsh completion for msfvenom in Metasploit Framework Project (https://www.metasploit.com)
+#
+# github:  https://github.com/Green-m/msfvenom-zsh-completion
+#
+# author:  Green-m (greenm.xxoo@gmail.com)
+#
+# license: GNU General Public License v3.0
+#
+# Copyright (c) 2018, Green-m
+# All rights reserved.
+#
 
 _msfvenom() {
   zmodload zsh/parameter 2>/dev/null
