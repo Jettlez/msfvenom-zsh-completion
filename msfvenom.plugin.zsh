@@ -1,6 +1,6 @@
 msfvenom-recache() {
   local cache_dir="$HOME/.zsh/venom-cache"
-  local types=(payloads archs formats encoders platforms)
+  local types=(payloads archs formats encoders platforms nops)
   
   echo "[!] Clearing msfvenom completion cache..."
   rm -rf "$cache_dir"
