@@ -23,6 +23,7 @@ _msfvenom() {
   local FORMAT_CACHE="$CACHE_DIR/formats"
   local ENCODER_CACHE="$CACHE_DIR/encoders"
   local PLATFORM_CACHE="$CACHE_DIR/platforms"
+  local NOPS_CACHE="$CACHE_DIR/nops"
 
   [[ ! -d "$OPT_CACHE_DIR" ]] && mkdir -p "$OPT_CACHE_DIR"
 
@@ -44,7 +45,7 @@ _arguments -C \
     '(--platform)--platform[platform for payload]:platform:->platforms' \
     '(-o --out)'{-o,--out}'[save payload to file]:file:_files' \
     '(-b --bad-chars)'{-b,--bad-chars}'[characters to avoid (e.g. \\x00\\xff)]:badchars' \
-    '(-n --nopsled)'{-n,--nopsled}'[prepend a nopsled of length size]:length' \
+    '(-n --nops --nopsled)'{-n,--nops,--nopsled}'[nopsled length and optional generator]:length: :nop:->nops' \
     '(--encoder-space)--encoder-space[max size of encoded payload]:size' \
     '(-i --iterations)'{-i,--iterations}'[number of times to encode]:count' \
     '(-c --add-code)'{-c,--add-code}'[include additional win32 shellcode file]:file:_files' \
@@ -59,6 +60,11 @@ _arguments -C \
       local -a p_list
       p_list=(${(f)"$(cat_or_build "$PAYLOAD_CACHE" "payloads")"})
       [[ ${#p_list} -gt 0 ]] && _describe 'payloads' p_list && ret=0
+      ;;
+    nops)
+      local -a n_list
+      n_list=(${(f)"$(cat_or_build "$NOPS_CACHE" "nops")"})
+      [[ ${#n_list} -gt 0 ]] && _values 'nops' "${(@)n_list}" && ret=0
       ;;
     archs)
       local -a a_list
